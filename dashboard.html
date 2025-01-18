@@ -3,20 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard - BTC</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Dashboard</h1>
-        <canvas id="marketChart"></canvas>
+        <h1>Gráfica de Bitcoin (BTC)</h1>
+        <canvas id="btcChart"></canvas>
+
         <div>
-            <h2>Saldo Actual: <span id="balance">0</span></h2>
-            <input type="number" id="addBalance" placeholder="Agregar saldo" />
-            <button onclick="updateBalance()">Actualizar Saldo</button>
+            <h2>Modificar Operación</h2>
+            <form id="btcForm">
+                <label for="openPrice">Precio de Apertura:</label>
+                <input type="number" id="openPrice" placeholder="Precio de Apertura" required>
+                <br>
+                <label for="closePrice">Precio de Cierre:</label>
+                <input type="number" id="closePrice" placeholder="Precio de Cierre" required>
+                <br>
+                <button type="submit">Actualizar Gráfica</button>
+            </form>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
+
