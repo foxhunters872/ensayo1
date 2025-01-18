@@ -1,12 +1,44 @@
+// Registro de usuarios
+document.getElementById('registerForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const username = document.getElementById('username').value.trim(); // Nombre de usuario
+    const password = document.getElementById('password').value.trim(); // Contraseña
+
+    if (username && password) {
+        // Guardar usuario y contraseña en localStorage
+        localStorage.setItem(username, password);
+        alert('Usuario registrado con éxito');
+        document.getElementById('registerForm').reset();
+    } else {
+        alert('Por favor, completa todos los campos');
+    }
+});
+
+// Login de usuarios
+document.getElementById('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+
+    const storedPassword = localStorage.getItem(username); // Recuperar contraseña del usuario
+
+    if (storedPassword === password) {
+        alert('Login exitoso');
+        window.location.href = 'dashboard.html'; // Redirigir al dashboard
+    } else {
+        alert('Credenciales incorrectas');
+    }
+});
+
+// Lógica del dashboard
 if (window.location.pathname.includes('dashboard.html')) {
-    // Configuración inicial de la gráfica
     const ctx = document.getElementById('btcChart').getContext('2d');
     let btcData = {
-        labels: ['Apertura', 'Cierre'], // Etiquetas
+        labels: ['Apertura', 'Cierre'],
         datasets: [
             {
                 label: 'Precio de Bitcoin (BTC)',
-                data: [20000, 25000], // Precios iniciales ficticios
+                data: [20000, 25000],
                 backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
                 borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
                 borderWidth: 1,
@@ -14,36 +46,26 @@ if (window.location.pathname.includes('dashboard.html')) {
         ],
     };
 
-    // Crear la gráfica
     const btcChart = new Chart(ctx, {
-        type: 'bar', // Tipo de gráfica
+        type: 'bar',
         data: btcData,
         options: {
             responsive: true,
             plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Gráfica de Precios de Bitcoin (BTC)',
-                },
+                legend: { position: 'top' },
+                title: { display: true, text: 'Gráfica de Precios de Bitcoin (BTC)' },
             },
         },
     });
 
-    // Formulario para actualizar precios
     document.getElementById('btcForm').addEventListener('submit', function (e) {
-        e.preventDefault(); // Evitar recarga de página
-
-        // Obtener valores del formulario
+        e.preventDefault();
         const openPrice = parseFloat(document.getElementById('openPrice').value);
         const closePrice = parseFloat(document.getElementById('closePrice').value);
 
         if (!isNaN(openPrice) && !isNaN(closePrice)) {
-            // Actualizar datos de la gráfica
             btcData.datasets[0].data = [openPrice, closePrice];
-            btcChart.update(); // Actualizar la gráfica
+            btcChart.update();
             alert('Gráfica actualizada con éxito');
         } else {
             alert('Por favor, ingresa valores válidos');
